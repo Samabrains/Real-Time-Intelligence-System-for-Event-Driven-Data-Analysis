@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "KQLDatabase",
+    "displayName": "Bicycle_tracking",
+    "description": "Bicycle_tracking"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cabab220-23a5-8dd5-4c43-bf2c4ca552d2"
+  }
+}

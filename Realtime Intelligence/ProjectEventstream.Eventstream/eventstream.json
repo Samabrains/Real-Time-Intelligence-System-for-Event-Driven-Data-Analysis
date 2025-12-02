@@ -1,0 +1,286 @@
+{
+  "sources": [
+    {
+      "id": "e4b4b711-6335-4f1b-b12a-99bba132b84a",
+      "name": "ProjectSource",
+      "type": "SampleData",
+      "properties": {
+        "type": "Bicycles"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "id": "20c6186d-861c-47f4-a341-e04718d9e454",
+      "name": "ProjectDestination",
+      "type": "Eventhouse",
+      "properties": {
+        "dataIngestionMode": "ProcessedIngestion",
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "cabab220-23a5-8dd5-4c43-bf2c4ca552d2",
+        "databaseName": "Bicycle_tracking",
+        "tableName": "RawData",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "ProjectTransform"
+        }
+      ],
+      "inputSchemas": [
+        {
+          "name": "ProjectTransform",
+          "schema": {
+            "columns": [
+              {
+                "name": "BikepointID",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Street",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Neighbourhood",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Latitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Longitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Bikes",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Empty_Docks",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Timestamp",
+                "type": "DateTime",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "598a18f6-44d3-4bc7-9293-71f2756ddb16",
+      "name": "ZLypQ-YrBE-2aE8jPO7gKV-4965724f-adfb-48b1-8f44-c49b03432dac",
+      "type": "Activator",
+      "properties": {
+        "workspaceId": "00000000-0000-0000-0000-000000000000",
+        "itemId": "03432dac-c49b-8f44-48b1-adfb4965724f",
+        "inputSerialization": {
+          "type": "Json",
+          "properties": {
+            "encoding": "UTF8"
+          }
+        }
+      },
+      "inputNodes": [
+        {
+          "name": "ProjectEventstream-stream"
+        }
+      ]
+    }
+  ],
+  "streams": [
+    {
+      "id": "b2a84b03-9e45-4fbb-af72-210de614f6c0",
+      "name": "ProjectEventstream-stream",
+      "type": "DefaultStream",
+      "properties": {},
+      "inputNodes": [
+        {
+          "name": "ProjectSource"
+        }
+      ]
+    }
+  ],
+  "operators": [
+    {
+      "name": "ProjectTransform",
+      "type": "ManageFields",
+      "inputNodes": [
+        {
+          "name": "ProjectEventstream-stream"
+        }
+      ],
+      "properties": {
+        "columns": [
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "BikepointID",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "BikepointID"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Street",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Street"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Neighbourhood",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Neighbourhood"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Latitude",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Latitude"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "Longitude",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "Longitude"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "No_Bikes",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "No_Bikes"
+          },
+          {
+            "type": "Rename",
+            "properties": {
+              "column": {
+                "expressionType": "ColumnReference",
+                "node": null,
+                "columnName": "No_Empty_Docks",
+                "columnPathSegments": []
+              }
+            },
+            "alias": "No_Empty_Docks"
+          },
+          {
+            "type": "FunctionCall",
+            "properties": {
+              "functionName": "SystemTimestamp",
+              "arguments": []
+            },
+            "alias": "Timestamp"
+          }
+        ]
+      },
+      "inputSchemas": [
+        {
+          "name": "ProjectEventstream-stream",
+          "schema": {
+            "columns": [
+              {
+                "name": "BikepointID",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Street",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Neighbourhood",
+                "type": "Nvarchar(max)",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Latitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "Longitude",
+                "type": "Float",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Bikes",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              },
+              {
+                "name": "No_Empty_Docks",
+                "type": "BigInt",
+                "fields": null,
+                "items": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "compatibilityLevel": "1.0"
+}
