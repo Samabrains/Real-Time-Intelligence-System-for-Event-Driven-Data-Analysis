@@ -1,0 +1,129 @@
+{
+  "schema_version": 63,
+  "tiles": [
+    {
+      "id": "3dd10733-9c78-4dfc-9c0d-231383d26bb8",
+      "title": "Recent number of bikes",
+      "visualType": "column",
+      "pageId": "477d84ad-cb6a-4418-98ae-9e5fdf8067bc",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 9,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "12d3b384-aa1a-4664-9a57-32420edd1e5a"
+      },
+      "visualOptions": {
+        "xColumn": "BikepointID",
+        "multipleYAxes": {
+          "additional": [],
+          "showMultiplePanels": false,
+          "base": {
+            "horizontalLines": [],
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "label": "",
+            "id": "-1"
+          }
+        },
+        "yColumns": [
+          "No_Bikes"
+        ],
+        "seriesColumns": null,
+        "anomalyColumns": null,
+        "map__longitudeColumn": "BikepointID",
+        "map__latitudeColumn": "No_Bikes",
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        }
+      }
+    },
+    {
+      "id": "cc1a5144-fd52-4cd5-a8d0-a0e46c7bcf97",
+      "title": "Bike locations Map",
+      "visualType": "map",
+      "pageId": "477d84ad-cb6a-4418-98ae-9e5fdf8067bc",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 14,
+        "height": 9
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "92f860b1-104d-49bb-9765-fa85a529fd68"
+      },
+      "visualOptions": {
+        "map__latitudeColumn": "Latitude",
+        "map__longitudeColumn": null,
+        "map__labelColumn": null,
+        "map__sizeColumn": null,
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "086d3928-3230-4074-a7e6-8c9b2dd94889",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "67de6056-14a3-45ca-9218-288cb15a8b96",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "",
+      "database": "cabab220-23a5-8dd5-4c43-bf2c4ca552d2",
+      "name": "Bicycle_tracking",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "477d84ad-cb6a-4418-98ae-9e5fdf8067bc"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "67de6056-14a3-45ca-9218-288cb15a8b96"
+      },
+      "text": "AggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)",
+      "id": "12d3b384-aa1a-4664-9a57-32420edd1e5a",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "67de6056-14a3-45ca-9218-288cb15a8b96"
+      },
+      "text": "RawData\n| where Timestamp > ago(1h)\n",
+      "id": "92f860b1-104d-49bb-9765-fa85a529fd68",
+      "usedVariables": []
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "6e7b68dc-a28c-4972-bf45-753fb7782470",
+        "clusterUri": "https://trd-7v43q41vs1x6asf5xz.z4.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "4ca552d2-bf2c-4c43-8dd5-23a5cabab220",
+        "databaseItemName": "Bicycle_tracking"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "a8d69d1f-03d2-44c8-9ebc-0bf7d579b6a6",
+        "content": "//function with transformation logic\n\n.create-or-alter function TransformRawData() {\nRawData\n| parse BikepointID with * \"BikePoints_\" BikepointID:int\n| extend BikesToBeFilled = No_Empty_Docks - No_Bikes\n| extend Action = iff(BikesToBeFilled > 0, tostring(BikesToBeFilled), \"NA\")\n }\n\n// IsEnabled (bool) - States if update policy is true - enabled, or false - disabled\n// source (string) - Name of the table that triggers invocation of the update policy\n// Query (string) - A query used to produce data for the update\n// IsTransactional (bool) - States if the update policy is transactional or not, //\n//default is false). If transactional and the update policy fails, the source table is not updated.\n// PropagateIngestionProperties (bool) - States if properties specified during ingestion to//\n// the source table, such as extent tags and creation time, apply to the target table\n// read more - https://aka.ms/updatepolicy\n\n.alter table TransformedData policy update\n```[{\n    \"IsEnabled\": true,\n    \"Source\": \"RawData\",\n    \"Query\": \"TransformRawData()\",\n    \"IsTransactional\": false,\n    \"PropagateIngestionProperties\": false\n}]```\n\n//Source Table Query:\n\nRawData\n| take 10\n\n\n//Transformed Table Query\n\nTransformedData\n| take 10\n\n\n\n//a time chart that shows the number of bikes in the Chelsea neighborhood\n\nTransformedData\n| where BikepointID > 100 and Neighbourhood == \"Chelsea\"\n| project Timestamp, No_Bikes\n| render timechart\n\n\n//a materialized view\n\n.create-or-alter materialized-view with (folder=\"Gold\") AggregatedData on table TransformedData\n{\n   TransformedData\n   | summarize arg_max(Timestamp,No_Bikes) by BikepointID\n}\n\n\n//materialized view as a column chart.\n\nAggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)\n\n\n//T-SQL Integration\n\nSELECT top(10) *\nFROM AggregatedData\nORDER BY No_Bikes DESC\n\n\n\n//Convert a SQL query to KQL\n\nexplain\nSELECT top(10) *\nFROM AggregatedData\nORDER BY No_Bikes DESC\n\n\n\nAggregatedData\n| project BikepointID, Timestamp, No_Bikes\n| sort by No_Bikes desc nulls last\n| take int(10)\n\n\n//Create a Real-Time Dashboard\n\n\nAggregatedData\n| sort by BikepointID\n| render columnchart with (ycolumns=No_Bikes,xcolumn=BikepointID)",
+        "title": "",
+        "dataSourceId": "6e7b68dc-a28c-4972-bf45-753fb7782470"
+      }
+    ]
+  }
+}

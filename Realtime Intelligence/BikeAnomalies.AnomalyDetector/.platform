@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "AnomalyDetector",
+    "displayName": "BikeAnomalies"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e8f5cce3-32d2-90b7-4401-8663392e917d"
+  }
+}

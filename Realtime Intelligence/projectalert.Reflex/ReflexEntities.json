@@ -1,0 +1,61 @@
+[
+  {
+    "uniqueIdentifier": "92718b2c-9f29-4d3d-89c0-5fb023f92edc",
+    "payload": {
+      "name": "ProjectEventstream",
+      "description": "Container Description",
+      "type": "eventstreams"
+    },
+    "type": "container-v1"
+  },
+  {
+    "uniqueIdentifier": "598a18f6-44d3-4bc7-9293-71f2756ddb16",
+    "payload": {
+      "name": "ProjectEventstream-stream event",
+      "metadata": {
+        "eventstreamArtifactId": "b2a84b03-9e45-4fbb-af72-210de614f6c0",
+        "eventTypes": [
+          {
+            "name": "ProjectEventstream"
+          }
+        ]
+      },
+      "parentContainer": {
+        "targetUniqueIdentifier": "92718b2c-9f29-4d3d-89c0-5fb023f92edc"
+      }
+    },
+    "type": "eventstreamSource-v1"
+  },
+  {
+    "uniqueIdentifier": "9a02c833-f9cc-4f9b-9e2d-407bf0fbdae7",
+    "payload": {
+      "name": "ProjectEventstream-stream event",
+      "parentContainer": {
+        "targetUniqueIdentifier": "92718b2c-9f29-4d3d-89c0-5fb023f92edc"
+      },
+      "definition": {
+        "type": "Event",
+        "instance": "{\"steps\":[{\"id\":\"e1171ea2-025b-4789-b90e-8f1fd453a42c\",\"name\":\"SourceEventStep\",\"rows\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"598a18f6-44d3-4bc7-9293-71f2756ddb16\"}],\"kind\":\"SourceReference\",\"name\":\"SourceSelector\"}]}],\"templateId\":\"SourceEvent\",\"templateVersion\":\"1.2.3\"}"
+      }
+    },
+    "type": "timeSeriesView-v1"
+  },
+  {
+    "uniqueIdentifier": "df460aae-f68e-49e3-a351-1e8b48660390",
+    "payload": {
+      "name": "ProjectRule",
+      "parentContainer": {
+        "targetUniqueIdentifier": "92718b2c-9f29-4d3d-89c0-5fb023f92edc"
+      },
+      "definition": {
+        "type": "Rule",
+        "instance": "{\"steps\":[{\"id\":\"2b755294-e9a4-49a7-8b92-3aa9ad20fb3d\",\"name\":\"FieldsDefaultsStep\",\"rows\":[{\"arguments\":[{\"arguments\":[{\"name\":\"entityId\",\"type\":\"string\",\"value\":\"9a02c833-f9cc-4f9b-9e2d-407bf0fbdae7\"}],\"kind\":\"EventReference\",\"name\":\"event\",\"type\":\"complex\"}],\"kind\":\"Event\",\"name\":\"EventSelector\"}]},{\"id\":\"d21390d7-6238-4332-ac10-f11ad7515a31\",\"name\":\"EventDetectStep\",\"rows\":[{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"No_Bikes\"}],\"kind\":\"EventField\",\"name\":\"EventFieldSelector\"},{\"arguments\":[{\"name\":\"op\",\"type\":\"string\",\"value\":\"IsLessThan\"},{\"name\":\"threshold\",\"type\":\"number\",\"value\":5}],\"kind\":\"NumberValueCondition\",\"name\":\"NumberValueCondition\"}]},{\"id\":\"6d7c0ea8-ac99-4c96-b396-6e4c10c7a401\",\"name\":\"ActStep\",\"rows\":[{\"arguments\":[{\"name\":\"messageLocale\",\"type\":\"string\",\"value\":\"en-us\"},{\"name\":\"sentTo\",\"type\":\"array\",\"values\":[{\"name\":\"string\",\"type\":\"string\",\"value\":\"rssebambulidde@samabrains.com\"},{\"name\":\"string\",\"type\":\"string\",\"value\":\"admin@samabrains.com\"}]},{\"name\":\"copyTo\",\"type\":\"array\",\"values\":[]},{\"name\":\"bCCTo\",\"type\":\"array\",\"values\":[]},{\"name\":\"subject\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"Activator alert ProjectRule\"}]},{\"name\":\"headline\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"The condition for 'ProjectRule' has been met\"}]},{\"name\":\"optionalMessage\",\"type\":\"array\",\"values\":[{\"type\":\"string\",\"value\":\"\"}]},{\"name\":\"additionalInformation\",\"type\":\"array\",\"values\":[{\"arguments\":[{\"name\":\"name\",\"type\":\"string\",\"value\":\"No_Bikes\"},{\"arguments\":[{\"name\":\"fieldName\",\"type\":\"string\",\"value\":\"No_Bikes\"}],\"kind\":\"EventFieldReference\",\"name\":\"reference\",\"type\":\"complexReference\"}],\"kind\":\"NameReferencePair\",\"type\":\"complex\"}]}],\"kind\":\"EmailMessage\",\"name\":\"EmailBinding\"}]}],\"templateId\":\"EventTrigger\",\"templateVersion\":\"1.2.3\"}",
+        "settings": {
+          "shouldRun": false,
+          "shouldApplyRuleOnUpdate": false
+        }
+      }
+    },
+    "type": "timeSeriesView-v1"
+  }
+]
