@@ -13,7 +13,7 @@
     "payload": {
       "name": "ProjectEventstream-stream event",
       "metadata": {
-        "eventstreamArtifactId": "07582573-2ab1-4ac0-af46-e7aec776e7df",
+        "eventstreamArtifactId": "38830c6e-44a4-4758-ba17-81e952e33efc",
         "eventTypes": [
           {
             "name": "ProjectEventstream"
